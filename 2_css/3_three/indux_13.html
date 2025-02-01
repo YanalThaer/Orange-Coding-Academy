@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Shop</title>
+  <style>
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+  color: red;
+  font-family: "Lucida Console", "Courier New", monospace;
+
+}
+
+hr {
+    width: 100%;
+    margin: 10px 0;
+}
+
+nav {
+  background-color: gray;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  
+  ul{
+    display: flex;
+    list-style: none;
+    li {
+      margin: 10px 15px;
+      font-family: "Lucida Console", "Courier New", monospace;
+
+    }
+  }
+  
+  img {
+    width: 50px;
+    margin: 10px 0;
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border:  2px solid black;
+  width: 100%;
+  min-height: 350px;
+  gap: 20px;
+  padding: 30px;
+  background-image: url('https://wallpaper.dog/large/20398905.jpg');
+  background-size: cover;
+  border-bottom-left-radius: 80px;
+
+}
+
+button {
+  font-family: "Lucida Console", "Courier New", monospace;
+  background-color: yellow;
+  border: 2px solid white;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 3px 0;
+  cursor: pointer;
+}
+
+.secBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background-color: wheat;
+  width: 250px;
+  height: 150px;
+  position: relative;
+  border-radius: 30px;
+  border: 1px solid black;
+  box-shadow: 0px 5px 10px 5px black;
+  button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+
+.card1 {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/000/615/019/original/vector-cartoon-smiling-chef-character.jpg');
+  background-size: cover;
+}
+
+.card2 {
+  background-image: url('https://jocyls.com/wp-content/uploads/2023/04/filipino-food-1024x683.png');
+  background-size: cover;
+}
+
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px;
+}
+
+.prodCard {
+  width: 350px;
+  height: 350px;
+  border: 2px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: white;
+  position: relative;
+  button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+
+.p1 {
+  background-image: url('https://lifemadesweeter.com/wp-content/uploads/Homemade-No-Churn-Strawberry-Ice-Cream-recipe-dairy-free-paleo-500x500.jpg');
+  background-size: cover;
+}
+
+.p2 {
+  background-image: url('https://www.magazinediscover.com/wp-content/uploads/2018/01/batidas.jpg');
+  background-size: cover;
+}
+
+.p3 {
+  background-image: url('https://images7.alphacoders.com/596/596343.jpg');
+  background-size: cover;
+}
+
+  </style>
+</head>
+<body>
+  <h1 class="title">Online</h1>
+  <h4>FoodShop</h4>
+  <hr>
+  
+  <nav>
+    <img src="https://i.pinimg.com/originals/4e/95/ff/4e95ff2406e7914e70cbbba6dd9c51d2.jpg" alt="logo">
+    <ul class="navLinks">
+      <li>Home</li>
+      <li>About</li>
+      <li>Menu</li>
+      <li>Contact Us</li>
+    </ul>
+  </nav>
+  
+  <section>
+    <h2 >Welcome to Online Food Shop</h2>
+    <button>ORDER NOW</button>
+    <div class="secBox">
+      <div class="card card1"><button>Prices</button></div>
+      <div class="card card2"><button>Special</button></div>
+    </div>
+    
+  </section>
+  <br>
+  <hr>
+  <h3 class="title">Featured Products</h3>
+  <div class="products">
+    <div class="prodCard p1"><button>ORDER NOW</button></div>
+    <div class="prodCard p2"><button>ORDER NOW</button></div>
+    <div class="prodCard p3"><button>ORDER NOW</button></div>
+  </div>
+  
+  <p>Copyright &copy 2020-2021 OnlineFoodShop. All Rights are reserved</p>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid & Flex Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 90%;
+        }
+        .item {
+            background: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+        }
+        .sub-container {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            width: 100%;
+        }
+        .sub-item {
+            background: #ccc;
+            flex: 1 1 calc(50% - 5px);
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">Item 1</div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+                <div class="sub-item">Sub 3</div>
+                <div class="sub-item">Sub 4</div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+                <div class="sub-item">Sub 3</div>
+                <div class="sub-item">Sub 4</div>
+            </div>
+        </div>
+        <div class="item">Item 4</div>
+        <div class="item">Item 5</div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+            </div>
+        </div>
+        <div class="item">Item 8</div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+                <div class="sub-item">Sub 3</div>
+                <div class="sub-item">Sub 4</div>
+            </div>
+        </div>
+        <div class="item">Item 10</div>
+        <div class="item">Item 11</div>
+        <div class="item">
+            <div class="sub-container">
+                <div class="sub-item">Sub 1</div>
+                <div class="sub-item">Sub 2</div>
+                <div class="sub-item">Sub 3</div>
+                <div class="sub-item">Sub 4</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

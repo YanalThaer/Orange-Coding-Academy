@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .flex-column {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+        }
+        .large { 
+            flex: 1; 
+            background: #ffe4e1;
+        }
+        .small {
+             flex: 1; 
+             background: #e0ffff; 
+        }
+        .medium {
+            flex: 1; 
+            background: #f0fff0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-column">
+        <div class="large">
+          I have lots of content. So much content...
+        </div>
+        <div class="small">I am small</div>
+        <div class="medium">I have more content...</div>
+      </div>
+</body>
+</html>
