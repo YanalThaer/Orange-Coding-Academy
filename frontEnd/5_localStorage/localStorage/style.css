@@ -1,0 +1,34 @@
+*{
+    background-color: black;
+    color: white;
+}
+
+.container{
+    display: flex;
+    gap: 10px;
+}
+input{
+    background-color: white;
+}
+#saveButton{
+    background-color: rgb(10, 158, 10);
+}
+input{
+    color: black;
+}
+
+#editButton{
+    background-color: yellow;
+    color: black;
+}
+
+#deleteButton{
+    background-color: red;
+    color: white;
+}
+#usersTable{
+    margin-top: 20px;
+}
+tr th{
+    padding: 15px;
+}

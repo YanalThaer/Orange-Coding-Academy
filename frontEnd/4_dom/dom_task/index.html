@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Task</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .editor {
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: fit-content;
+        }
+        .output {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid blue;
+            background-color: cyan;
+            min-height: 100px;
+            width: fit-content;
+            resize: both; /* يسمح للمستخدم بتغيير حجم textarea */
+            text-align: left; /* محاذاة افتراضية */
+        }
+        button, select, input {
+            margin: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .active {
+            border: 2px solid green;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dom Task</h2>
+    <div class="container">
+        <div class="editor">
+            <button id="bold">Bold</button>
+            <button id="italic">Italic</button>
+            <button id="uppercase">Upper Case</button>
+            <button id="lowercase">Lower Case</button>
+            <button id="capitalize">Capitalize</button>
+            <button id="clear">Clear Text</button>
+            <br>
+            <button id="alignLeft"><i class='bx bx-align-left'></i></button>
+            <button id="alignCenter"><i class='bx bx-align-middle' ></i></button>
+            <button id="alignRight"><i class='bx bx-align-right' ></i></button>
+            <br>
+            <input type="number" id="fontSize" value="16" style="width: 50px;">
+            <select id="fontFamily">
+                <option>Arial</option>
+                <option>Georgia</option>
+                <option>Times New Roman</option>
+                <option>Verdana</option>
+            </select>
+            <input type="color" id="fontColor" value="#000000">
+            <input type="color" id="bgColor" value="#00FFFF">
+            <br>
+            <button id="print">Print Text</button>
+        </div>
+        <textarea class="output" id="output">Enter your text here...</textarea>
+    </div>
+    
+    <script>
+        const output = document.getElementById("output");
+        const boldButton = document.getElementById("bold");
+        const italicButton = document.getElementById("italic");
+        
+        // مسح النص عند النقر على textarea
+        output.addEventListener("focus", function() {
+            if (output.value === "Enter your text here...") {
+                output.value = ""; // مسح النص الافتراضي
+            }
+        });
+
+        boldButton.addEventListener("click", function() {
+            output.style.fontWeight = output.style.fontWeight === "bold" ? "normal" : "bold";
+            boldButton.classList.toggle("active");
+        });
+        
+        italicButton.addEventListener("click", function() {
+            output.style.fontStyle = output.style.fontStyle === "italic" ? "normal" : "italic";
+            italicButton.classList.toggle("active");
+        });
+        
+        document.getElementById("uppercase").addEventListener("click", function() {
+            output.value = output.value.toUpperCase();
+        });
+        
+        document.getElementById("lowercase").addEventListener("click", function() {
+            output.value = output.value.toLowerCase();
+        });
+        
+        document.getElementById("capitalize").addEventListener("click", function() {
+            output.value = output.value.replace(/\b\w/g, c => c.toUpperCase());
+        });
+        
+        document.getElementById("clear").addEventListener("click", function() {
+            output.value = "";
+        });
+
+        // أحداث محاذاة النص
+        document.getElementById("alignLeft").addEventListener("click", function() {
+            output.style.textAlign = "left";
+        });
+
+        document.getElementById("alignCenter").addEventListener("click", function() {
+            output.style.textAlign = "center";
+        });
+
+        document.getElementById("alignRight").addEventListener("click", function() {
+            output.style.textAlign = "right";
+        });
+        
+        document.getElementById("fontSize").addEventListener("input", function() {
+            output.style.fontSize = this.value + "px";
+        });
+        
+        document.getElementById("fontFamily").addEventListener("change", function() {
+            output.style.fontFamily = this.value;
+        });
+        
+        document.getElementById("fontColor").addEventListener("input", function() {
+            output.style.color = this.value;
+        });
+        
+        document.getElementById("bgColor").addEventListener("input", function() {
+            output.style.backgroundColor = this.value;
+        });
+        
+        document.getElementById("print").addEventListener("click", function() {
+            window.print();
+        });
+    </script>
+</body>
+</html>

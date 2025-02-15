@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Application with Local Storage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>CRUD Application with Local Storage</h1>
+    
+    <div class="container">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age" placeholder="Enter your Age">
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Enter your Address">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Enter your Email">
+        </div>
+        
+        <button type="button" onclick="saveToLocalStorage()" id="saveButton">Add</button>
+    </div>
+    
+    <table border="1" id="usersTable">
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+
+    <script>
+        let editIndex = -1;
+
+        function saveToLocalStorage() {
+            const inputName = document.getElementById('name').value;
+            const inputAge = document.getElementById('age').value;
+            const inputAddress = document.getElementById('address').value;
+            const inputEmail = document.getElementById('email').value;
+
+            if (!inputName || !inputAge || !inputAddress || !inputEmail) {
+                alert("All fields are required!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            const newUser = {
+                name: inputName,
+                age: inputAge,
+                address: inputAddress,
+                email: inputEmail
+            };
+
+            if (editIndex === -1) {
+                users.push(newUser);
+            } else {
+                users[editIndex] = newUser;
+                editIndex = -1;
+                document.getElementById('saveButton').textContent = "Add";
+            }
+
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Data saved!");
+            clearForm();
+            loadUsersToTable();
+        }
+
+        function loadUsersToTable() {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let table = document.getElementById('usersTable');
+
+            table.innerHTML = `
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+
+            users.forEach((user, index) => {
+                let row = table.insertRow();
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.age}</td>
+                    <td>${user.address}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <button id=editButton onclick="editUser(${index})">Edit</button>
+                        <button id=deleteButton onclick="removeFromLocalStorage(${index})">Delete</button>
+                    </td>
+                `;
+            });
+        }
+
+        function editUser(index) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let user = users[index];
+
+            document.getElementById('name').value = user.name;
+            document.getElementById('age').value = user.age;
+            document.getElementById('address').value = user.address;
+            document.getElementById('email').value = user.email;
+
+            editIndex = index;
+            document.getElementById('saveButton').textContent = "Update";
+        }
+
+        function removeFromLocalStorage(index) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsersToTable();
+        }
+
+        function clearForm() {
+            document.getElementById('name').value = "";
+            document.getElementById('age').value = "";
+            document.getElementById('address').value = "";
+            document.getElementById('email').value = "";
+        }
+
+        window.onload = loadUsersToTable;
+    </script>
+</body>
+</html>

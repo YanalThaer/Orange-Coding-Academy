@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- ------------------------ 1 -->
+    <label for="username">Username:</label>
+    <input type="text" id="username"><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password"><br>
+
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" id="confirm_password"><br>
+    <!-- ------------------------ 2 -->
+    <p id="error-message" style="color: red;"></p>
+    <!-- ------------------------ 3 -->
+    <p id="password-error" style="color: red;"></p>
+    <!-- ------------------------ 4 -->
+    <button id="register" disabled>Register</button>
+    <!-- ------------------------ 5 -->
+    <p id="success-message" style="color: green;"></p>
+    <!-- ------------------------ 6 -->
+    <p id="text">JavaScript is a powerful programming language.</p>
+    <!-- ------------------------ 7 -->
+    <p id="text">This is a sample paragraph.</p>
+    <!-- ------------------------ 8 -->
+    <p id="paragraph">This is the first sentence. This is the second sentence.</p>
+    <!-- ------------------------ 9 -->
+    <h2 id="heading">Word Count:</h2>
+    <p id="paragraph">This is a sample text with some words.</p>
+    <!-- ------------------------ 10 -->
+    <input type="text" id="itemInput">
+    <button onclick="addItem()">Add</button>
+    <ul id="shoppingList"></ul>
+    <!-- ------------------------ 11 -->
+    <table id="scores_table" border="1">
+        <tr><th>Name</th><th>Score</th></tr>
+    </table>
+    <!-- ------------------------ 12 -->
+    <div id="results"></div>
+    <!-- ------------------------ 13 -->
+    <input type="text" id="nameInput" placeholder="Enter Name">
+    <input type="number" id="scoreInput" placeholder="Enter Score">
+    <button onclick="addScore()">Add Score</button>
+<script>
+    // ------------------------------- 2
+    document.querySelectorAll("input").forEach(input => {
+        input.addEventListener("blur", function () {
+            if (!this.value) {
+                document.getElementById("error-message").textContent = "All fields are required!";
+            } else {
+                document.getElementById("error-message").textContent = "";
+            }
+        });
+    });
+// ------------------------------- 3
+    document.getElementById("confirm_password").addEventListener("input", function () {
+        let password = document.getElementById("password").value;
+        let confirmPassword = this.value;
+
+        document.getElementById("password-error").textContent =
+            password === confirmPassword ? "" : "Passwords do not match!";
+    });
+
+    // ------------------------------- 4
+    function validateForm() {
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirm_password").value;
+
+        document.getElementById("register").disabled = !(username && password && confirmPassword && password === confirmPassword);
+    }
+
+    document.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", validateForm);
+    });
+
+    // ------------------------------- 5
+    document.getElementById("register").addEventListener("click", function () {
+        document.getElementById("success-message").textContent = "User registered successfully!";
+    });
+
+    // ------------------------------- 6
+    let words = document.getElementById("text").innerHTML.split(" ");
+    words = words.map(word => word.length > 8 ? `<span style="background-color: yellow">${word}</span>` : word);
+    document.getElementById("text").innerHTML = words.join(" ");
+
+    // ------------------------------- 7
+    let link = document.createElement("a");
+    link.href = "https://google.com/";
+    link.textContent = "Source";
+    document.body.appendChild(link);
+
+    // ------------------------------- 8
+    let paragraph = document.getElementById("paragraph").innerHTML;
+    document.getElementById("paragraph").innerHTML = paragraph.replace(/\./g, ".<br>");
+
+    // ------------------------------- 9
+    let count = document.getElementById("paragraph").innerText.split(" ").length;
+    document.getElementById("heading").innerText += " " + count;
+
+    // ------------------------------- 10
+    function addItem() {
+        let input = document.getElementById("itemInput");
+        if (input.value.trim() === "") return;
+
+        let li = document.createElement("li");
+        li.textContent = input.value + " ";
+        let deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => li.remove();
+        li.appendChild(deleteButton);
+
+        document.getElementById("shoppingList").appendChild(li);
+        input.value = "";
+        input.focus();
+    }
+
+    // ------------------------------- 11
+    let names = ["John", "Alice", "Bob", "Sara"];
+    let scores = [85, 90, 78, 88];
+
+    function displayScores() {
+        let table = document.getElementById("scores_table");
+        table.innerHTML = "<tr><th>Name</th><th>Score</th></tr>";
+        for (let i = 0; i < names.length; i++) {
+            table.innerHTML += `<tr><td>${names[i]}</td><td>${scores[i]}</td></tr>`;
+        }
+    }
+
+    displayScores();
+
+    // ------------------------------- 12
+    function displayResults() {
+        let highest = Math.max(...scores);
+        let average = scores.reduce((a, b) => a + b) / scores.length;
+        document.getElementById("results").innerHTML = `<h2>Results</h2> <p>Average Score: ${average}</p> <p>Highest Score: ${highest}</p>`;
+    }
+
+    displayResults();
+
+    // ------------------------------- 13
+    function addScore() {
+        let name = document.getElementById("nameInput").value;
+        let score = Number(document.getElementById("scoreInput").value);
+
+        if (!name || score < 0 || score > 100) {
+            alert("You must enter a name and a valid score");
+            return;
+        }
+
+        names.push(name);
+        scores.push(score);
+        displayScores();
+    }
+</script>
+
+
+</body>
+</html>
