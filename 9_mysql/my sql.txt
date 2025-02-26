@@ -1,0 +1,283 @@
+(1)
+
+CREATE TABLE students (
+     student_id  INT PRIMARY KEY AUTO_INCREMENT,
+    first_name  VARCHAR(100),
+     last_name VARCHAR(20) ,
+     email VARCHAR(100) UNIQUE;
+     date_of_birth DATE;
+     gender VARCHAR(100);
+    major VARCHAR(100);
+   enrollment_year year 
+
+);
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100),
+    course_code VARCHAR(20) UNIQUE,
+    credits INT,
+    department VARCHAR(100)
+);
+
+CREATE TABLE Instructors (
+    instructor_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    hire_date DATE,
+    department VARCHAR(100)
+);
+
+CREATE TABLE Enrollments (
+    enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id INT,
+    course_id INT,
+    grade CHAR(2),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+CREATE TABLE Course_Assignments (
+    assignment_id INT PRIMARY KEY AUTO_INCREMENT,
+    instructor_id INT,
+    course_id INT,
+    semester VARCHAR(10),
+    year YEAR,
+    FOREIGN KEY (instructor_id) REFERENCES Instructors(instructor_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+
+(2)
+
+INSERT INTO Students (first_name, last_name, email, date_of_birth, gender, major, enrollment_year)
+VALUES 
+('Ali', 'Hassan', 'ali.hassan@example.com', '2002-05-15', 'Male', 'Computer Science', 2021),
+('Sara', 'Ahmed', 'sara.ahmed@example.com', '2003-08-10', 'Female', 'Business', 2022),
+('Khalid', 'Omar', 'khalid.omar@example.com', '2001-11-20', 'Male', 'Engineering', 2020),
+('Lina', 'Kareem', 'lina.kareem@example.com', '2002-09-25', 'Female', 'Computer Science', 2021),
+('Mona', 'Nasser', 'mona.nasser@example.com', '2000-12-30', 'Female', 'Business', 2019),
+('Hassan', 'Ali', 'hassan.ali@example.com', '2003-04-18', 'Male', 'Engineering', 2022),
+('Reem', 'Fahad', 'reem.fahad@example.com', '2001-06-22', 'Female', 'Medicine', 2020),
+('Tariq', 'Youssef', 'tariq.youssef@example.com', '2002-02-14', 'Male', 'Computer Science', 2021),
+('Salma', 'Adel', 'salma.adel@example.com', '2003-03-11', 'Female', 'Business', 2022),
+('Omar', 'Gamal', 'omar.gamal@example.com', '2000-07-29', 'Male', 'Engineering', 2019);
+
+
+INSERT INTO Courses (course_name, course_code, credits, department)
+VALUES 
+('Database Systems', 'DB101', 3, 'Computer Science'),
+('Algorithms', 'AL202', 4, 'Computer Science'),
+('Marketing Basics', 'MK301', 3, 'Business'),
+('Civil Engineering', 'CE401', 5, 'Engineering'),
+('Human Physiology', 'HP501', 4, 'Medicine');
+
+
+
+INSERT INTO Instructors (first_name, last_name, email, hire_date, department)
+VALUES 
+('Mohamed', 'Fahmy', 'mohamed.fahmy@example.com', '2018-09-15', 'Computer Science'),
+('Ahmad', 'Saad', 'ahmad.saad@example.com', '2017-05-20', 'Business'),
+('Youssef', 'Ali', 'youssef.ali@example.com', '2015-06-10', 'Engineering'),
+('Nadia', 'Kamel', 'nadia.kamel@example.com', '2016-12-01', 'Medicine'),
+('Hassan', 'Tarek', 'hassan.tarek@example.com', '2019-08-08', 'Computer Science');
+
+
+INSERT INTO Course_Assignments (instructor_id, course_id, semester, year)
+VALUES 
+(1, 1, 'Fall', 2024),
+(1, 2, 'Fall', 2024),
+(2, 3, 'Fall', 2024),
+(3, 4, 'Fall', 2024),
+(4, 5, 'Fall', 2024);
+
+
+INSERT INTO Enrollments (student_id, course_id, grade)
+VALUES 
+(1, 1, 'A'), (1, 2, 'B'),
+(2, 3, 'A'), (2, 1, 'B'),
+(3, 4, 'C'), (3, 2, 'B'),
+(4, 1, 'A'), (4, 5, 'B'),
+(5, 3, 'A'), (5, 4, 'C'),
+(6, 2, 'B'), (6, 4, 'A'),
+(7, 5, 'A'), (7, 3, 'B'),
+(8, 1, 'C'), (8, 2, 'A'),
+(9, 3, 'B'), (9, 4, 'C'),
+(10, 5, 'A'), (10, 2, 'B');
+
+
+(3)
+
+ 3-1   SELECT * FROM Students ;
+
+ 3-2   SELECT COUNT(course_id) FROM courses;
+
+  3-3  SELECT students.student_id, students.first_name, students.last_name FROM students JOIN enrollments ON students.student_id = enrollments.student_id WHERE enrollments.course_id = 1; // كتبتها داخل ال SQL تاعت الfirst_task
+
+3-4 SELECT email FROM instructors WHERE department='Computer Science';
+
+3-5 SELECT courses.course_name, COUNT(enrollments.student_id) AS num_students FROM courses LEFT JOIN enrollments ON courses.course_id = enrollments.course_id GROUP BY courses.course_name;
+
+3-6 SELECT students.student_id , students.first_name , students.last_name FROM students JOIN enrollments ON students.student_id= enrollments.student_id WHERE enrollments.grade='A';
+
+3-7     
+ SELECT courses.course_id, instructors.first_name, instructors.last_name , course_assignments.semester FROM course_assignments 
+JOIN courses ON course_assignments.course_id = courses.course_id 
+JOIN instructors ON course_assignments.instructor_id = instructors.instructor_id WHERE course_assignments.semester = 'Fall';
+
+3-8
+SELECT c.course_name, AVG(
+   CASE 
+      WHEN grade = 'A' THEN 4.0
+      WHEN grade = 'B' THEN 3.0
+      WHEN grade = 'C' THEN 2.0
+      ELSE 0
+   END) AS average_grade
+FROM Enrollments e
+JOIN Courses c ON e.course_id = c.course_id
+WHERE c.course_id = 1;
+
+
+3-9 
+SELECT students.first_name , students.last_name , COUNT(enrollments.course_id) AS num_course 
+FROM students 
+JOIN enrollments ON enrollments.student_id= students.student_id
+JOIN course_assignments ON course_assignments.course_id= enrollments.course_id
+WHERE course_assignments.semester = 'Fall' 
+GROUP BY students.student_id HAVING num_course>3;
+
+3-10
+SELECT students.first_name , students.last_name FROM students
+JOIN enrollments ON enrollments.student_id =students.student_id 
+WHERE enrollments.grade='F';
+
+3-11
+SELECT students.first_name , students.last_name ,
+AVG(CASE WHEN grade='A' THEN 4.00 
+    WHEN grade='B' THEN 3.00
+    WHEN grade='C' THEN 2.75
+    ELSE 0
+    end) AS Compleate
+FROM enrollments JOIN students ON enrollments.student_id = students.student_id
+GROUP BY students.student_id ORDER BY Compleate DESC LIMIT 1 ;
+
+3-12
+SELECT courses.department , COUNT(courses.course_id) AS number 
+FROM courses 
+GROUP BY courses.department ORDER BY number DESC LIMIT 1 ;
+
+3-13
+SELECT courses.course_name FROM courses
+JOIN enrollments ON enrollments.course_id= courses.course_id 
+WHERE enrollments.student_id=0 LIMIT 1;
+
+
+4-1
+
+SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_of_birth)), '%Y') + 0 AS age
+FROM students;
+
+4-2
+DELIMITER //
+
+CREATE PROCEDURE EnrollStudent(
+    IN studentID INT, 
+    IN courseID INT, 
+    IN grade CHAR(2)
+)
+BEGIN
+    DECLARE studentExists INT;
+
+    SELECT COUNT(*) INTO studentExists 
+    FROM Enrollments 
+    WHERE student_id = studentID AND course_id = courseID;
+
+    IF studentExists = 0 THEN
+        INSERT INTO Enrollments (student_id, course_id, grade) 
+        VALUES (studentID, courseID, grade);
+
+        SELECT 'Student enrolled successfully!' AS Message;
+    ELSE
+        SELECT 'Student is already enrolled in this course!' AS Message;
+    END IF;
+END //
+
+DELIMITER ;
+CALL EnrollStudent(20, 4, 'A');
+
+
+4-3
+SELECT courses.department, AVG(
+   CASE 
+      WHEN grade = 'A' THEN 4.0
+      WHEN grade = 'B' THEN 3.0
+      WHEN grade = 'C' THEN 2.0
+      ELSE 0
+   END) AS average_grade
+FROM enrollments 
+JOIN Courses ON enrollments.course_id = courses.course_id
+GROUP BY courses.department; 
+
+5-1
+ALTER TABLE students
+ADD CONSTRAINT unique_email UNIQUE (email);
+
+5-2
+DELIMITER //
+
+CREATE PROCEDURE enrollStudent(IN student_id INT, IN course_id INT)
+BEGIN
+    DECLARE enrolled INT;
+    DECLARE capacity INT;
+
+    SELECT COUNT(*) INTO enrolled FROM enrollments WHERE enrollments.course_id = course_id;
+
+    SELECT courses.capacity INTO capacity FROM courses WHERE courses.course_id = course_id;
+
+    IF enrolled < capacity THEN
+        INSERT INTO enrollments (student_id, course_id) VALUES (student_id, course_id);
+    ELSE
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Course capacity exceeded';
+    END IF;
+END // 
+
+DELIMITER ;
+CALL enrollStudent(2, 1);
+
+6-1
+FOREIGN KEY (course_code) REFERENCES Courses(course_code)// في حال كان primary في جدول ما  
+
+6-2
+EXPLAIN SELECT students.first_name , students.last_name , enrollments.student_id FROM enrollments JOIN students ON enrollments.student_id=students.student_id WHERE enrollments.course_id=1;
+
+7-1
+SELECT students.first_name , students.last_name , courses.course_name FROM students
+ INNER JOIN enrollments ON enrollments.student_id=students.student_id #the  defult value is inner
+ INNER JOIN courses ON courses.course_id=enrollments.course_id
+GROUP BY students.student_id;
+
+7-2
+SELECT students.first_name , students.last_name , courses.course_name FROM students
+ LEFT JOIN enrollments ON enrollments.student_id=students.student_id 
+ LEFT JOIN courses ON courses.course_id=enrollments.course_id
+GROUP BY students.student_id;
+
+7-3
+SELECT major  FROM students
+UNION
+SELECT department AS major FROM instructors
+ORDER BY major;
+
+8-
+SELECT students.first_name AS name_student  , students.email , students.major ,  enrollments.grade , instructors.first_name AS name_instructors , courses.course_name, SUM(courses.credits) FROM enrollments #مراجعة الSum
+JOIN students ON students.student_id=enrollments.student_id
+JOIN courses ON courses.course_id=enrollments.course_id
+JOIN instructors ON instructors.department=courses.department
+GROUP BY courses.course_name;
+  
+
+
+
+
+
