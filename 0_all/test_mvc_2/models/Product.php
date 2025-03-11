@@ -65,6 +65,20 @@ class Product{
         $products = $products->fetchAll(PDO::FETCH_ASSOC);
         return $products;
     }
+
+    public function find($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM products WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
+        return null;
+    }
 }
 
 ?>
