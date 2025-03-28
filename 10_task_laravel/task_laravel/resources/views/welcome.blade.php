@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <!-- Task Category 1 -->
-            @if (Auth::check())
+            @auth
                 @foreach ($categories as $category)
                 <div class="col-md-4">
                     <div class="card p-3">
@@ -68,7 +68,8 @@
                 <div class="alert alert-warning" role="alert">
                     Please login to view your tasks
                 </div>
-            @endif
+            @endauth
+            
         </div>
     </div>
     @if ($errors->any())

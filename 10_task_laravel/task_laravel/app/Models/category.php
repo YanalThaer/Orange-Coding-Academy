@@ -14,13 +14,15 @@ class category extends Model
         'register_id'
     ];
 
-    public function tasks()
-    {
-        return $this->hasMany(Task::class, 'category_id');
-    }
     public function register()
     {
         return $this->belongsTo(Reigistertion::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'category_id');
+    }
+    
     
 }
